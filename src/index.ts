@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { program, initializeCLI } from "./cli.ts";
+import { program, initializeCLI, preprocessArgs } from "./cli.ts";
 import { handleError } from "@/utils/error.ts";
 
 async function main() {
@@ -8,8 +8,11 @@ async function main() {
     // Initialize CLI and register commands
     await initializeCLI();
 
-    // Then parse arguments
-    await program.parseAsync(process.argv);
+    // Preprocess arguments to resolve aliases
+    const processedArgs = await preprocessArgs();
+
+    // Parse with resolved arguments
+    await program.parseAsync(["node", "xe", ...processedArgs]);
   } catch (error) {
     handleError(error);
     process.exit(1);

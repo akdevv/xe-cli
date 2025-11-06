@@ -4,6 +4,8 @@ import { pathExists } from "fs-extra";
 import { PackageManagerExecutor } from "@/core/pm/executor.ts";
 import { logger } from "@/utils/logger.ts";
 import chalk from "chalk";
+import { AliasResolver } from "./alias.resolver.ts";
+import { execa } from "execa";
 
 interface PackageJson {
   scripts?: Record<string, string>;
@@ -19,6 +21,18 @@ export async function handleUnknownCommand(operands: string[]): Promise<void> {
     logger.info('Run "xe --help" to see available commands');
     process.exit(1);
   }
+
+  // First, try to resolve as alias or custom command
+  const resolvedType = AliasResolver.getType(commandName);
+
+  if (resolvedType === "custom") {
+    // Execute custom command
+    await executeCustomCommand(commandName, args);
+    return;
+  }
+
+  // If it's an alias, it should have been resolved in cli.ts already
+  // So if we're here, it's not an alias or custom command
 
   try {
     // Check if package.json exists
@@ -63,6 +77,33 @@ export async function handleUnknownCommand(operands: string[]): Promise<void> {
     } else {
       logger.error("Failed to execute command:", error.message);
     }
+    process.exit(1);
+  }
+}
+
+async function executeCustomCommand(
+  commandName: string,
+  args: string[]
+): Promise<void> {
+  const customCommand = AliasResolver.resolve(commandName);
+
+  logger.info(`Executing custom command: ${commandName}`);
+  logger.debug(`Full command: ${customCommand}`);
+
+  // Parse the custom command and execute it
+  // Custom commands can be chained with && or complex
+
+  try {
+    // Execute the full command string in shell mode
+    await execa(customCommand, args, {
+      shell: true,
+      stdio: "inherit",
+      cwd: process.cwd(),
+    });
+
+    logger.success("Custom command completed!");
+  } catch (error: any) {
+    logger.error("Custom command failed:", error.message);
     process.exit(1);
   }
 }

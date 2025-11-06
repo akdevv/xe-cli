@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { ConfigManager } from "@/config/config.manager.ts";
 import { handleUnknownCommand } from "@/core/runner.ts";
+import { AliasResolver } from "@/core/alias.resolver.ts";
 import {
   registerCoreCommands,
   registerConfigCommands,
@@ -41,4 +42,40 @@ export async function initializeCLI() {
   }
 }
 
-export { program };
+// Resolve aliases before parsing
+async function preprocessArgs(): Promise<string[]> {
+  const args = process.argv.slice(2);
+
+  if (args.length === 0) {
+    return args;
+  }
+
+  const firstArg = args[0];
+
+  if (!firstArg) {
+    return args;
+  }
+
+  // Don't resolve if it's a flag
+  if (firstArg.startsWith("-")) {
+    return args;
+  }
+
+  // Check if it's an alias or custom command
+  const resolvedType = AliasResolver.getType(firstArg);
+
+  if (resolvedType !== "none") {
+    const resolvedParts = AliasResolver.resolveAndSplit(firstArg);
+    const remainingArgs = args.slice(1);
+
+    logger.debug(
+      `Resolved ${resolvedType}: ${firstArg} -> ${resolvedParts.join(" ")}`
+    );
+
+    return [...resolvedParts, ...remainingArgs];
+  }
+
+  return args;
+}
+
+export { program, preprocessArgs };
