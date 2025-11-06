@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "extensions": {
+    "git": true,
+    "github": true,
+    "prisma": true,
+    "docker": true,
+    "shadcn": true
+  },
+  "aliases": {},
+  "customCommands": {},
+  "pm": "auto",
+  "features": {
+    "autoCommit": false
+  }
+}

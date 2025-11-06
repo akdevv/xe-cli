@@ -1,0 +1,31 @@
+import { logger } from "./logger.ts";
+
+export function handleError(error: any): void {
+  if (error.code === "ENOENT") {
+    logger.error(
+      "Command not found. Make sure the required tool is installed."
+    );
+  } else if (error.stderr) {
+    logger.error("Command failed:");
+    console.error(error.stderr);
+  } else if (error.message) {
+    logger.error(error.message);
+  } else {
+    logger.error("An unexpected error occurred:", error);
+  }
+
+  if (process.env.DEBUG) {
+    console.error(error);
+  }
+}
+
+export class XeError extends Error {
+  constructor(
+    msg: string,
+    public code?: string
+  ) {
+    super(msg);
+    this.name = "XeError";
+    this.code = code;
+  }
+}

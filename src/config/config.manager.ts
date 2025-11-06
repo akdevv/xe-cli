@@ -1,5 +1,6 @@
 import * as path from "path";
-import * as fs from "fs-extra";
+import { promises as fs } from "fs";
+import { pathExists } from "fs-extra";
 import * as os from "os";
 import type { XeConfig } from "./config.types.ts";
 import { getDefaultConfig } from "./default.config.ts";
@@ -35,7 +36,7 @@ export class ConfigManager {
     this.configPath = this.getConfigPath();
 
     // Check if config file exists
-    if (await fs.pathExists(this.configPath)) {
+    if (await pathExists(this.configPath)) {
       try {
         const fileContent = await fs.readFile(this.configPath, "utf8");
         const userConfig = JSON.parse(fileContent);
@@ -63,7 +64,11 @@ export class ConfigManager {
     }
 
     try {
-      await fs.writeJSON(this.configPath, this.config, { spaces: 2 });
+      await fs.writeFile(
+        this.configPath,
+        JSON.stringify(this.config, null, 2),
+        "utf8"
+      );
       logger.debug(`Config saved to: ${this.configPath}`);
     } catch (error) {
       logger.error(`Failed to save config: ${error}`);
@@ -76,6 +81,10 @@ export class ConfigManager {
       throw new Error("No config available");
     }
     return this.config;
+  }
+
+  getConfigPathName(): string {
+    return this.configPath;
   }
 
   updateConfig(updates: Partial<XeConfig>): void {

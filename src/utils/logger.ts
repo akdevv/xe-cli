@@ -23,6 +23,14 @@ export const logger = {
     }
   },
 
+  command: (command: string) => {
+    console.log(chalk.cyan("$"), chalk.white(command));
+  },
+
+  section: (title: string) => {
+    console.log("\n" + chalk.bold.cyan(title));
+  },
+
   log: (msg: string, ...args: any[]) => {
     console.log(msg, ...args);
   },
