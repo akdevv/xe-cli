@@ -90,8 +90,8 @@ This document contains a comprehensive list of all commands in the xe CLI projec
 - [ ] `xe git push -u` (push and set upstream)
 - [ ] `xe git push --set-upstream` (push and set upstream)
 - [ ] `xe git save` (add + commit + push with default message)
-- [ ] `xe g save` (alias for git save)
-- [ ] `xe git save <message>` (add + commit + push with custom message)
+- [x] `xe g save` (alias for git save)
+- [x] `xe git save <message>` (add + commit + push with custom message)
 - [ ] `xe git sync` (pull with rebase + push)
 - [ ] `xe g sync` (alias for git sync)
 
