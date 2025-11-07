@@ -3,7 +3,6 @@ import inquirer from "inquirer";
 import { type PackageManager, PM_COMMANDS } from "./types.ts";
 import { PackageManagerDetector } from "./detector.ts";
 import { logger } from "@/utils/logger.ts";
-import { createSpinner } from "@/utils/spinner.ts";
 
 const PM_INSTALL_COMMANDS: Record<PackageManager, string | null> = {
   npm: null, // npm cannot be installed via npm
@@ -44,11 +43,8 @@ async function installPackageManager(pm: PackageManager): Promise<boolean> {
   }
 
   logger.info(`\nInstalling ${pm} globally...`);
-  const spinner = createSpinner(`Installing ${pm}...`);
 
   try {
-    spinner.start();
-    
     const parts = installCommand.split(" ");
     const cmd = parts[0];
     const args = parts.slice(1);
@@ -61,11 +57,10 @@ async function installPackageManager(pm: PackageManager): Promise<boolean> {
       stdio: "inherit",
       cwd: process.cwd(),
     });
-
-    spinner.succeed(`${pm} installed successfully!`);
+    logger.success(`${pm} installed successfully!`);
     return true;
   } catch (error) {
-    spinner.fail(`Failed to install ${pm}`);
+    logger.error(`Failed to install ${pm}`);
     logger.error("Installation error:", error);
     return false;
   }
@@ -150,24 +145,19 @@ export class PackageManagerExecutor {
 
     logger.info(`Running: ${fullCommand}`);
 
-    const spinner = createSpinner("Executing...");
-
     try {
-      spinner.start();
-
       const [cmd, ...cmdArgs] = fullCommand.split(" ") as [string, ...string[]];
       const result = await execa(cmd, cmdArgs, {
         stdio: options.silent ? "pipe" : "inherit",
         cwd: process.cwd(),
       });
-
-      spinner.succeed("Done!");
+      logger.success("Done!");
 
       if (options.silent && result.stdout) {
         console.log(result.stdout);
       }
     } catch (error: unknown) {
-      spinner.fail("Command failed");
+      logger.error("Command failed");
       throw error;
     }
   }

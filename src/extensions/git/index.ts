@@ -22,12 +22,13 @@ export function registerGitCommands(program: Command): void {
   git
     .command("* [args...]", { hidden: true })
     .allowUnknownOption(true)
-    .action(async (commandName: string, args: string[] = []) => {
+    .action(async (...args: any[]) => {
       try {
-        // Pass through to native git command
-        const gitArgs = [commandName, ...args];
-        logger.debug(`Executing: git ${gitArgs.join(" ")}`);
+        const gitArgs = args
+          .filter((arg) => Array.isArray(arg) || typeof arg === "string")
+          .flat();
 
+        // Pass through to native git command
         await execa("git", gitArgs, {
           stdio: "inherit",
         });

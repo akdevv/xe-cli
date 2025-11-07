@@ -6,22 +6,22 @@ This document contains a comprehensive list of all commands in the xe CLI projec
 
 ### Package Management
 
-- [ ] `xe install` (install all dependencies)
-- [ ] `xe i` (alias for install)
-- [ ] `xe install <package>` (install single package)
-- [ ] `xe i <package>` (alias for install with package)
-- [ ] `xe install <package1> <package2>` (install multiple packages)
-- [ ] `xe install -D <package>` (install as dev dependency)
-- [ ] `xe install --save-dev <package>` (install as dev dependency)
-- [ ] `xe install -g <package>` (install globally)
-- [ ] `xe install --global <package>` (install globally)
-- [ ] `xe uninstall <package>` (uninstall package)
-- [ ] `xe un <package>` (alias for uninstall)
-- [ ] `xe uninstall <package1> <package2>` (uninstall multiple packages)
-- [ ] `xe update` (update all packages)
-- [ ] `xe up` (alias for update)
-- [ ] `xe update <package>` (update specific package)
-- [ ] `xe update <package1> <package2>` (update multiple packages)
+- [x] `xe install` (install all dependencies)
+- [x] `xe i` (alias for install)
+- [x] `xe install <package>` (install single package)
+- [x] `xe i <package>` (alias for install with package)
+- [x] `xe install <package1> <package2>` (install multiple packages)
+- [x] `xe install -D <package>` (install as dev dependency)
+- [x] `xe install --save-dev <package>` (install as dev dependency)
+- [x] `xe install -g <package>` (install globally)
+- [x] `xe install --global <package>` (install globally)
+- [x] `xe uninstall <package>` (uninstall package)
+- [x] `xe un <package>` (alias for uninstall)
+- [x] `xe uninstall <package1> <package2>` (uninstall multiple packages)
+- [x] `xe update` (update all packages)
+- [x] `xe up` (alias for update)
+- [x] `xe update <package>` (update specific package)
+- [x] `xe update <package1> <package2>` (update multiple packages)
 
 ### Project Commands
 
@@ -29,48 +29,48 @@ This document contains a comprehensive list of all commands in the xe CLI projec
 - [x] `xe init -y` (initialize with defaults, skip prompts)
 - [x] `xe init --yes` (initialize with defaults, skip prompts)
 - [x] `xe run <script>` (run package.json script)
-- [ ] `xe run <script> <args...>` (run script with extra arguments)
-- [ ] `xe start` (run start script)
-- [ ] `xe dev` (run dev script)
-- [ ] `xe build` (run build script)
-- [ ] `xe lint` (run lint script)
-- [ ] `xe scripts` (list all available scripts)
-- [ ] `xe ls` (alias for scripts)
-- [ ] `xe nuke` (delete all node_modules, with confirmation)
-- [ ] `xe nuke -y` (delete all node_modules, skip confirmation)
-- [ ] `xe nuke --yes` (delete all node_modules, skip confirmation)
-- [ ] `xe nuke --dry-run` (show what would be deleted without deleting)
+- [x] `xe run <script> <args...>` (run script with extra arguments)
+- [x] `xe start` (run start script)
+- [x] `xe dev` (run dev script)
+- [x] `xe build` (run build script)
+- [x] `xe lint` (run lint script)
+- [x] `xe scripts` (list all available scripts)
+- [x] `xe ls` (alias for scripts)
+- [x] `xe nuke` (delete all node_modules, with confirmation)
+- [x] `xe nuke -y` (delete all node_modules, skip confirmation)
+- [x] `xe nuke --yes` (delete all node_modules, skip confirmation)
+- [x] `xe nuke --dry-run` (show what would be deleted without deleting)
 
 ## Config Commands
 
 ### Config Management
 
-- [ ] `xe config path` (show config file path)
-- [ ] `xe config edit` (open config file in default editor)
-- [ ] `xe config show` (show current configuration)
-- [ ] `xe config reset` (reset configuration to defaults)
+- [x] `xe config path` (show config file path)
+- [x] `xe config edit` (open config file in default editor)
+- [x] `xe config show` (show current configuration)
+- [x] `xe config reset` (reset configuration to defaults)
 
 ### Extension Management
 
-- [ ] `xe config ext-enable <extension>` (enable extension: git, github, prisma, docker, shadcn)
-- [ ] `xe config ext-disable <extension>` (disable extension)
-- [ ] `xe config ext-list` (list all extensions and their status)
+- [x] `xe config ext-enable <extension>` (enable extension: git, github, prisma, docker, shadcn)
+- [x] `xe config ext-disable <extension>` (disable extension)
+- [x] `xe config ext-list` (list all extensions and their status)
 
 ### Alias Management
 
-- [ ] `xe config alias-add <alias> <command>` (add command alias)
-- [ ] `xe config alias-remove <alias>` (remove command alias)
-- [ ] `xe config alias-list` (list all configured aliases)
+- [x] `xe config alias-add <alias> <command>` (add command alias)
+- [x] `xe config alias-remove <alias>` (remove command alias)
+- [x] `xe config alias-list` (list all configured aliases)
 
 ### Custom Command Management
 
-- [ ] `xe config cmd-add <name> <command>` (add a custom command)
-- [ ] `xe config cmd-remove <name>` (remove a custom command)
-- [ ] `xe config cmd-list` (list all custom commands)
+- [x] `xe config cmd-add <name> <command>` (add a custom command)
+- [x] `xe config cmd-remove <name>` (remove a custom command)
+- [x] `xe config cmd-list` (list all custom commands)
 
 ### Package Manager Configuration
 
-- [ ] `xe config set-pm <manager>` (set package manager: npm, pnpm, yarn, bun, auto)
+- [x] `xe config set-pm <manager>` (set package manager: npm, pnpm, yarn, bun, auto)
 
 ## Extension Commands
 
@@ -78,9 +78,9 @@ This document contains a comprehensive list of all commands in the xe CLI projec
 
 #### Git Commands
 
-- [ ] `xe git add` (add all files)
-- [ ] `xe g add` (alias for git add)
-- [ ] `xe git add .` (add all files explicitly)
+- [x] `xe git add` (add all files)
+- [x] `xe g add` (alias for git add)
+- [x] `xe git add .` (add all files explicitly)
 - [ ] `xe git add <file>` (add specific file)
 - [ ] `xe git add <file1> <file2>` (add multiple files)
 - [ ] `xe git push` (push to current branch, auto-detect)
@@ -97,20 +97,20 @@ This document contains a comprehensive list of all commands in the xe CLI projec
 
 #### Git Pass-through Commands
 
-- [ ] `xe git status` (pass through to native git)
-- [ ] `xe g status` (pass through to native git)
-- [ ] `xe git commit -m "message"` (pass through to native git)
-- [ ] `xe git log` (pass through to native git)
-- [ ] `xe git log --oneline` (pass through to native git)
-- [ ] `xe git branch` (pass through to native git)
-- [ ] `xe git checkout <branch>` (pass through to native git)
-- [ ] `xe git diff` (pass through to native git)
-- [ ] `xe git pull` (pass through to native git)
-- [ ] `xe git clone <repo>` (pass through to native git)
-- [ ] `xe git merge <branch>` (pass through to native git)
-- [ ] `xe git rebase <branch>` (pass through to native git)
-- [ ] `xe git reset` (pass through to native git)
-- [ ] `xe git stash` (pass through to native git)
+- [x] `xe git status` (pass through to native git)
+- [x] `xe g status` (pass through to native git)
+- [x] `xe git commit -m "message"` (pass through to native git)
+- [x] `xe git log` (pass through to native git)
+- [x] `xe git log --oneline` (pass through to native git)
+- [x] `xe git branch` (pass through to native git)
+- [x] `xe git checkout <branch>` (pass through to native git)
+- [x] `xe git diff` (pass through to native git)
+- [x] `xe git pull` (pass through to native git)
+- [x] `xe git clone <repo>` (pass through to native git)
+- [x] `xe git merge <branch>` (pass through to native git)
+- [x] `xe git rebase <branch>` (pass through to native git)
+- [x] `xe git reset` (pass through to native git)
+- [x] `xe git stash` (pass through to native git)
 
 ### GitHub Extension (`xe gh`)
 

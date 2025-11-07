@@ -1,0 +1,24 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node -e \"console.log('build script running')\"",
+    "lint": "node -e \"console.log('lint script running')\"",
+    "format": "node -e \"console.log('format script running')\"",
+    "test": "node -e \"console.log('test script running')\"",
+    "run": "node -e \"console.log('run script running')\"",
+    "dev": "node -e \"console.log('dev script running')\"",
+    "start": "node -e \"console.log('start script running')\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
