@@ -1,21 +1,40 @@
-# Source Files
+# Source files
 src/
 tests/
 
-# Configuration
+# Configuration files
 tsconfig.json
 .eslintrc.js
 .prettierrc
 .prettierignore
 
-# Development 
+# Development
 *.test.ts
 *.spec.ts
 .vscode/
 .idea/
 
+# Git
+.git/
+.gitignore
+
 # Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
 
-Misc
+# Environment
+.env
+.env.*
+
+# Build artifacts
+*.tsbuildinfo
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Misc
+node_modules/
+coverage/
+.nyc_output/
