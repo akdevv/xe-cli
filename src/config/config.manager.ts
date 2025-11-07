@@ -113,14 +113,6 @@ export class ConfigManager {
     return this.config?.extensions[extensionName] ?? false;
   }
 
-  getAlias(alias: string): string | undefined {
-    return this.config?.aliases[alias];
-  }
-
-  getCustomCommand(commandName: string): string | undefined {
-    return this.config?.customCommands[commandName];
-  }
-
   async addAlias(alias: string, command: string): Promise<void> {
     if (!this.config) {
       throw new Error("Config not initialized");

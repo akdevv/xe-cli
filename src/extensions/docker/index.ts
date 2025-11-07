@@ -131,7 +131,7 @@ export function registerDockerCommands(program: Command): void {
   docker
     .command("exec <service> <command...>")
     .description("Execute a command in a running container")
-    .option("-it", "Interactive terminal (default)")
+    .option("--no-it", "Disable interactive terminal (default: enabled)")
     .action(
       async (
         service: string,

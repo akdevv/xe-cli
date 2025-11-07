@@ -28,13 +28,6 @@ export class AliasResolver {
     return resolved.split(" ").filter((part) => part.length > 0);
   }
 
-  static exists(input: string): boolean {
-    const configManager = ConfigManager.getInstance();
-    const config = configManager.getConfig();
-
-    return !!(config.aliases[input] || config.customCommands[input]);
-  }
-
   static getType(input: string): "alias" | "custom" | "none" {
     const configManager = ConfigManager.getInstance();
     const config = configManager.getConfig();

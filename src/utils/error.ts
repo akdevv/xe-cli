@@ -19,13 +19,3 @@ export function handleError(error: any): void {
   }
 }
 
-export class XeError extends Error {
-  constructor(
-    msg: string,
-    public code?: string
-  ) {
-    super(msg);
-    this.name = "XeError";
-    this.code = code;
-  }
-}

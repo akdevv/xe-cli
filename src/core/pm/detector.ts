@@ -81,7 +81,8 @@ export class PackageManagerDetector {
   }
 
   private static async detectFromBinary(): Promise<PackageManager | null> {
-    const managers: PackageManager[] = ["bun", "pnpm", "yarn", "npm"];
+    // Prefer npm as it's most common, then check others
+    const managers: PackageManager[] = ["npm", "pnpm", "yarn", "bun"];
 
     for (const pm of managers) {
       try {
@@ -93,9 +94,5 @@ export class PackageManagerDetector {
     }
 
     return null;
-  }
-
-  static reset(): void {
-    this.detectedPM = null;
   }
 }
