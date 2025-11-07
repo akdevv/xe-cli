@@ -2,6 +2,10 @@
 
 A lightweight, universal package manager.
 
+![npm version](https://img.shields.io/npm/v/xe-cli)
+![npm downloads](https://img.shields.io/npm/dm/xe-cli)
+![license](https://img.shields.io/npm/l/xe-cli)
+
 ## Installation
 
 ```bash
