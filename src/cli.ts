@@ -6,7 +6,7 @@ import {
   registerCoreCommands,
   registerConfigCommands,
 } from "@/core/commands/index.ts";
-
+import { ExtensionLoader } from "@/extensions/index.ts";
 import { logger } from "@/utils/logger.ts";
 
 const program = new Command();
@@ -29,8 +29,8 @@ export async function initializeCLI() {
     registerConfigCommands(program);
 
     // Load and register extensions
-    // const extensionLoader = new ExtensionLoader();
-    // await extensionLoader.loadExtensions(program);
+    const extensionLoader = new ExtensionLoader();
+    await extensionLoader.loadExtensions(program);
 
     // Handle unknown commands
     program.on("command:*", async (operands) => {
