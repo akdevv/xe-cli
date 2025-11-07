@@ -19,20 +19,20 @@ export function initCommand(shadcn: Command): void {
         switch (pm) {
           case "pnpm":
             cmd = "pnpm";
-            args = ["dlx", "shadcn@latest", "init", "-y"];
+            args = ["dlx", "shadcn@latest", "init", "-y", "-b", "neutral"];
             break;
           case "yarn":
             cmd = "yarn";
-            args = ["dlx", "shadcn@latest", "init", "-y"];
+            args = ["dlx", "shadcn@latest", "init", "-y", "-b", "neutral"];
             break;
           case "bun":
             cmd = "bunx";
-            args = ["--bun", "shadcn@latest", "init", "-y"];
+            args = ["--bun", "shadcn@latest", "init", "-y", "-b", "neutral"];
             break;
           case "npm":
           default:
             cmd = "npx";
-            args = ["shadcn@latest", "init", "-y"];
+            args = ["shadcn@latest", "init", "-y", "-b", "neutral"];
             break;
         }
 

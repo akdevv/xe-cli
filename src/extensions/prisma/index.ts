@@ -4,13 +4,18 @@ import { logger } from "@/utils/logger.ts";
 
 export function registerPrismaCommands(program: Command): void {
   const prisma = program
-    .command("prisma")
+    .command("prisma [subcommand...]")
     .description("Prisma commands")
     .allowUnknownOption(true);
 
   // Default action when no subcommand is provided
   // Runs: generate, db pull, db push
-  prisma.action(async () => {
+  prisma.action(async (subcommand?: string[]) => {
+    // If a subcommand is provided, it means we're in the catch-all case
+    if (subcommand && subcommand.length > 0) {
+      return; // Let the catch-all handle it
+    }
+
     try {
       logger.info("Running Prisma workflow (generate → pull → push)...");
 
@@ -49,18 +54,27 @@ export function registerPrismaCommands(program: Command): void {
     });
 
   prisma
-    .command("migrate")
+    .command("migrate [subcommand...]")
     .description("Run database migrations")
     .option("-n, --name <name>", "Migration name")
-    .action(async (options: { name?: string }) => {
+    .allowUnknownOption(true)
+    .action(async (subcommand: string[] | undefined, options: { name?: string }) => {
       try {
-        logger.info("Running migrations...");
-        const args = ["prisma", "migrate", "dev"];
-        if (options.name) {
-          args.push("--name", options.name);
+        // If subcommand is provided, pass it through
+        if (subcommand && subcommand.length > 0) {
+          const args = ["prisma", "migrate", ...subcommand];
+          logger.debug(`Executing: npx ${args.join(" ")}`);
+          await execa("npx", args, { stdio: "inherit" });
+        } else {
+          // Default: run migrate dev
+          logger.info("Running migrations...");
+          const args = ["prisma", "migrate", "dev"];
+          if (options.name) {
+            args.push("--name", options.name);
+          }
+          await execa("npx", args, { stdio: "inherit" });
+          logger.success("Migrations completed!");
         }
-        await execa("npx", args, { stdio: "inherit" });
-        logger.success("Migrations completed!");
       } catch (error) {
         logger.error("Prisma migrate failed:", error);
         process.exit(1);
