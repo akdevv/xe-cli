@@ -2,6 +2,16 @@ import { Command } from 'commander';
 import { execa } from 'execa';
 import { logger } from '@/utils/logger.ts';
 
+async function hasChanges(): Promise<boolean> {
+  try {
+    // Check if there are any changes (staged or unstaged)
+    const { stdout: statusOutput } = await execa('git', ['status', '--porcelain']);
+    return statusOutput.trim().length > 0;
+  } catch {
+    return false;
+  }
+}
+
 export function saveCommand(git: Command): void {
   git
     .command('save')
@@ -9,6 +19,14 @@ export function saveCommand(git: Command): void {
     .argument('[message]', 'Commit message (default: "WIP: auto-save")')
     .action(async (message?: string) => {
       try {
+        // Check if there are any changes first
+        const changesExist = await hasChanges();
+
+        if (!changesExist) {
+          logger.info('No changes to save. Working tree is clean.');
+          return;
+        }
+
         const commitMessage = message || 'WIP: auto-save';
 
         // Step 1: Add all files
