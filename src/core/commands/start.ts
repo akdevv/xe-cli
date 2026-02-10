@@ -11,8 +11,8 @@ export function startCommand(program: Command): void {
         const executor = new PackageManagerExecutor();
         await executor.execute("start");
         logger.success("Started!");
-      } catch (error) {
-        logger.error("Start failed:", error);
+      } catch {
+        logger.error("Start failed.");
         process.exit(1);
       }
     });

@@ -31,12 +31,12 @@ export function initCommand(program: Command): void {
         ]);
 
         const selectedPM = packageManager as PackageManager;
-        
+
         // Verify the selected package manager is installed
         await verifyPackageManagerInstalled(selectedPM);
-        
+
         const initCommand = PM_COMMANDS[selectedPM].init;
-        
+
         // Only npm, yarn, and bun support -y flag
         // pnpm init automatically uses defaults without needing a flag
         const supportsYesFlag = ["npm", "yarn", "bun"].includes(selectedPM);
@@ -60,8 +60,8 @@ export function initCommand(program: Command): void {
         await savePackageManagerToPackageJson(selectedPM);
 
         logger.success("Project initialized!");
-      } catch (error) {
-        logger.error("Initialization failed:", error);
+      } catch {
+        logger.error("Initialization failed.");
         process.exit(1);
       }
     });
@@ -78,7 +78,9 @@ async function savePackageManagerToPackageJson(
 
     // Check if package.json exists
     if (!(await pathExists(packageJsonPath))) {
-      logger.debug("package.json not found, skipping packageManager field update");
+      logger.debug(
+        "package.json not found, skipping packageManager field update"
+      );
       return;
     }
 

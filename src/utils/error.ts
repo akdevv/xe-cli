@@ -11,11 +11,10 @@ export function handleError(error: any): void {
   } else if (error.message) {
     logger.error(error.message);
   } else {
-    logger.error("An unexpected error occurred:", error);
+    logger.error("An unexpected error occurred.");
   }
 
   if (process.env.DEBUG) {
     console.error(error);
   }
 }
-

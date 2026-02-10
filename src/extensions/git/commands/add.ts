@@ -22,8 +22,8 @@ export function addCommand(git: Command): void {
           await execa("git", ["add", ...files], { stdio: "inherit" });
           logger.success("Files added!");
         }
-      } catch (error) {
-        logger.error("Git add failed:", error);
+      } catch {
+        logger.error("Git add failed.");
         process.exit(1);
       }
     });

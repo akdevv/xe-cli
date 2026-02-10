@@ -34,11 +34,15 @@ export function registerGithubCommands(program: Command): void {
 
       // Assigned issues
       logger.info("Assigned Issues:");
-      await execa("gh", ["issue", "list", "--assignee", "@me", "--limit", "5"], {
-        stdio: "inherit",
-      });
-    } catch (error) {
-      logger.error("Failed to fetch GitHub status:", error);
+      await execa(
+        "gh",
+        ["issue", "list", "--assignee", "@me", "--limit", "5"],
+        {
+          stdio: "inherit",
+        }
+      );
+    } catch {
+      logger.error("Failed to fetch GitHub status.");
       process.exit(1);
     }
   });
@@ -62,8 +66,8 @@ export function registerGithubCommands(program: Command): void {
 
           await execa("gh", args, { stdio: "inherit" });
           logger.success("Repository created!");
-        } catch (error) {
-          logger.error("Failed to create repository:", error);
+        } catch {
+          logger.error("Failed to create repository.");
           process.exit(1);
         }
       }
@@ -77,8 +81,8 @@ export function registerGithubCommands(program: Command): void {
       try {
         logger.info("Creating pull request...");
         await execa("gh", ["pr", "create", "--web"], { stdio: "inherit" });
-      } catch (error) {
-        logger.error("Failed to create PR:", error);
+      } catch {
+        logger.error("Failed to create PR.");
         process.exit(1);
       }
     });
@@ -92,8 +96,8 @@ export function registerGithubCommands(program: Command): void {
         logger.info(`Checking out PR #${number}...`);
         await execa("gh", ["pr", "checkout", number], { stdio: "inherit" });
         logger.success(`PR #${number} checked out!`);
-      } catch (error) {
-        logger.error("Failed to checkout PR:", error);
+      } catch {
+        logger.error("Failed to checkout PR.");
         process.exit(1);
       }
     });
@@ -121,8 +125,8 @@ export function registerGithubCommands(program: Command): void {
 
           await execa("gh", args, { stdio: "inherit" });
           logger.success("PR merged!");
-        } catch (error) {
-          logger.error("Failed to merge PR:", error);
+        } catch {
+          logger.error("Failed to merge PR.");
           process.exit(1);
         }
       }
@@ -137,8 +141,8 @@ export function registerGithubCommands(program: Command): void {
         if (number) args.push(number);
 
         await execa("gh", args, { stdio: "inherit" });
-      } catch (error) {
-        logger.error("Failed to view PR:", error);
+      } catch {
+        logger.error("Failed to view PR.");
         process.exit(1);
       }
     });
@@ -150,8 +154,8 @@ export function registerGithubCommands(program: Command): void {
       try {
         logger.info("Creating issue...");
         await execa("gh", ["issue", "create", "--web"], { stdio: "inherit" });
-      } catch (error) {
-        logger.error("Failed to create issue:", error);
+      } catch {
+        logger.error("Failed to create issue.");
         process.exit(1);
       }
     });
@@ -164,8 +168,8 @@ export function registerGithubCommands(program: Command): void {
         logger.info(`Cloning ${repo}...`);
         await execa("gh", ["repo", "clone", repo], { stdio: "inherit" });
         logger.success("Repository cloned!");
-      } catch (error) {
-        logger.error("Failed to clone repository:", error);
+      } catch {
+        logger.error("Failed to clone repository.");
         process.exit(1);
       }
     });
@@ -176,8 +180,8 @@ export function registerGithubCommands(program: Command): void {
     .action(async () => {
       try {
         await execa("gh", ["auth", "status"], { stdio: "inherit" });
-      } catch (error) {
-        logger.error("Failed to check auth status:", error);
+      } catch {
+        logger.error("Failed to check auth status.");
         process.exit(1);
       }
     });
@@ -216,8 +220,8 @@ export function registerGithubCommands(program: Command): void {
         await execa("gh", ["pr", "create", "--web"], { stdio: "inherit" });
 
         logger.success("\n🎉 Ship workflow completed!");
-      } catch (error) {
-        logger.error("Ship workflow failed:", error);
+      } catch {
+        logger.error("Ship workflow failed.");
         process.exit(1);
       }
     });
@@ -240,8 +244,8 @@ export function registerGithubCommands(program: Command): void {
         logger.success("✓ Pulled!\n");
 
         logger.success("🎉 Sync completed!");
-      } catch (error) {
-        logger.error("Sync failed:", error);
+      } catch {
+        logger.error("Sync failed.");
         process.exit(1);
       }
     });
@@ -253,7 +257,9 @@ export function registerGithubCommands(program: Command): void {
     )
     .action(async (issueNumber: string) => {
       try {
-        logger.info(`🔧 Starting quickfix workflow for issue #${issueNumber}...\n`);
+        logger.info(
+          `🔧 Starting quickfix workflow for issue #${issueNumber}...\n`
+        );
 
         // Get issue title for branch name
         logger.info("Step 1/2: Fetching issue details...");
@@ -285,8 +291,8 @@ export function registerGithubCommands(program: Command): void {
         logger.success(
           `🎉 Quickfix setup complete! Make your changes and run 'xe gh ship' when ready.`
         );
-      } catch (error) {
-        logger.error("Quickfix workflow failed:", error);
+      } catch {
+        logger.error("Quickfix workflow failed.");
         process.exit(1);
       }
     });
@@ -295,24 +301,22 @@ export function registerGithubCommands(program: Command): void {
     .command("approve <pr-number>")
     .description("Quick approve a pull request")
     .option("-c, --comment <comment>", "Add a comment with approval")
-    .action(
-      async (prNumber: string, options: { comment?: string }) => {
-        try {
-          logger.info(`Approving PR #${prNumber}...`);
-          const args = ["pr", "review", prNumber, "--approve"];
+    .action(async (prNumber: string, options: { comment?: string }) => {
+      try {
+        logger.info(`Approving PR #${prNumber}...`);
+        const args = ["pr", "review", prNumber, "--approve"];
 
-          if (options.comment) {
-            args.push("--body", options.comment);
-          }
-
-          await execa("gh", args, { stdio: "inherit" });
-          logger.success(`PR #${prNumber} approved!`);
-        } catch (error) {
-          logger.error("Failed to approve PR:", error);
-          process.exit(1);
+        if (options.comment) {
+          args.push("--body", options.comment);
         }
+
+        await execa("gh", args, { stdio: "inherit" });
+        logger.success(`PR #${prNumber} approved!`);
+      } catch {
+        logger.error("Failed to approve PR.");
+        process.exit(1);
       }
-    );
+    });
 
   // Catch-all for any other GitHub CLI commands (passthrough)
   github
@@ -327,8 +331,8 @@ export function registerGithubCommands(program: Command): void {
         await execa("gh", ghArgs, {
           stdio: "inherit",
         });
-      } catch (error) {
-        logger.error("GitHub CLI command failed:", error);
+      } catch {
+        logger.error("GitHub CLI command failed.");
         process.exit(1);
       }
     });

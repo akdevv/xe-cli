@@ -41,8 +41,8 @@ export function runCommand(program: Command): void {
         const executor = new PackageManagerExecutor();
         const extraArgs = command.args.slice(1);
         await executor.execute("run", [script, ...extraArgs]);
-      } catch (error) {
-        logger.error("Script execution failed:", error);
+      } catch {
+        logger.error("Script execution failed.");
         process.exit(1);
       }
     });

@@ -11,8 +11,8 @@ export function devCommand(program: Command) {
         const executor = new PackageManagerExecutor();
         await executor.execute("dev");
         logger.success("Dev server started!");
-      } catch (error) {
-        logger.error("Dev failed:", error);
+      } catch {
+        logger.error("Dev failed.");
         process.exit(1);
       }
     });

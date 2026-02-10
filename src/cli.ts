@@ -37,7 +37,7 @@ export async function initializeCLI() {
       await handleUnknownCommand(operands);
     });
   } catch (error) {
-    logger.error("Failed to initialize CLI:", error);
+    logger.error("Failed to initialize CLI.");
     throw error;
   }
 }

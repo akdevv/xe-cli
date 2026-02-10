@@ -32,8 +32,8 @@ export function registerPrismaCommands(program: Command): void {
       logger.success("✓ Schema pushed!");
 
       logger.success("Prisma workflow completed!");
-    } catch (error) {
-      logger.error("Prisma workflow failed:", error);
+    } catch {
+      logger.error("Prisma workflow failed.");
       process.exit(1);
     }
   });
@@ -47,8 +47,8 @@ export function registerPrismaCommands(program: Command): void {
         logger.info("Generating Prisma Client...");
         await execa("npx", ["prisma", "generate"], { stdio: "inherit" });
         logger.success("Prisma Client generated!");
-      } catch (error) {
-        logger.error("Prisma generate failed:", error);
+      } catch {
+        logger.error("Prisma generate failed.");
         process.exit(1);
       }
     });
@@ -58,28 +58,30 @@ export function registerPrismaCommands(program: Command): void {
     .description("Run database migrations")
     .option("-n, --name <name>", "Migration name")
     .allowUnknownOption(true)
-    .action(async (subcommand: string[] | undefined, options: { name?: string }) => {
-      try {
-        // If subcommand is provided, pass it through
-        if (subcommand && subcommand.length > 0) {
-          const args = ["prisma", "migrate", ...subcommand];
-          logger.debug(`Executing: npx ${args.join(" ")}`);
-          await execa("npx", args, { stdio: "inherit" });
-        } else {
-          // Default: run migrate dev
-          logger.info("Running migrations...");
-          const args = ["prisma", "migrate", "dev"];
-          if (options.name) {
-            args.push("--name", options.name);
+    .action(
+      async (subcommand: string[] | undefined, options: { name?: string }) => {
+        try {
+          // If subcommand is provided, pass it through
+          if (subcommand && subcommand.length > 0) {
+            const args = ["prisma", "migrate", ...subcommand];
+            logger.debug(`Executing: npx ${args.join(" ")}`);
+            await execa("npx", args, { stdio: "inherit" });
+          } else {
+            // Default: run migrate dev
+            logger.info("Running migrations...");
+            const args = ["prisma", "migrate", "dev"];
+            if (options.name) {
+              args.push("--name", options.name);
+            }
+            await execa("npx", args, { stdio: "inherit" });
+            logger.success("Migrations completed!");
           }
-          await execa("npx", args, { stdio: "inherit" });
-          logger.success("Migrations completed!");
+        } catch {
+          logger.error("Prisma migrate failed.");
+          process.exit(1);
         }
-      } catch (error) {
-        logger.error("Prisma migrate failed:", error);
-        process.exit(1);
       }
-    });
+    );
 
   prisma
     .command("studio")
@@ -88,8 +90,8 @@ export function registerPrismaCommands(program: Command): void {
       try {
         logger.info("Opening Prisma Studio...");
         await execa("npx", ["prisma", "studio"], { stdio: "inherit" });
-      } catch (error) {
-        logger.error("Prisma studio failed:", error);
+      } catch {
+        logger.error("Prisma studio failed.");
         process.exit(1);
       }
     });
@@ -102,8 +104,8 @@ export function registerPrismaCommands(program: Command): void {
         logger.info("Pushing schema...");
         await execa("npx", ["prisma", "db", "push"], { stdio: "inherit" });
         logger.success("Schema pushed!");
-      } catch (error) {
-        logger.error("Prisma push failed:", error);
+      } catch {
+        logger.error("Prisma push failed.");
         process.exit(1);
       }
     });
@@ -116,8 +118,8 @@ export function registerPrismaCommands(program: Command): void {
         logger.info("Pulling schema from database...");
         await execa("npx", ["prisma", "db", "pull"], { stdio: "inherit" });
         logger.success("Schema pulled!");
-      } catch (error) {
-        logger.error("Prisma pull failed:", error);
+      } catch {
+        logger.error("Prisma pull failed.");
         process.exit(1);
       }
     });
@@ -135,8 +137,8 @@ export function registerPrismaCommands(program: Command): void {
         await execa("npx", prismaArgs, {
           stdio: "inherit",
         });
-      } catch (error) {
-        logger.error("Prisma command failed:", error);
+      } catch {
+        logger.error("Prisma command failed.");
         process.exit(1);
       }
     });

@@ -17,8 +17,8 @@ export function registerDockerCommands(program: Command): void {
         logger.info("Starting containers...");
         await execa("docker-compose", ["up", "-d"], { stdio: "inherit" });
         logger.success("Containers started!");
-      } catch (error) {
-        logger.error("Docker up failed:", error);
+      } catch {
+        logger.error("Docker up failed.");
         process.exit(1);
       }
     });
@@ -31,8 +31,8 @@ export function registerDockerCommands(program: Command): void {
         logger.info("Stopping containers...");
         await execa("docker-compose", ["down"], { stdio: "inherit" });
         logger.success("Containers stopped!");
-      } catch (error) {
-        logger.error("Docker down failed:", error);
+      } catch {
+        logger.error("Docker down failed.");
         process.exit(1);
       }
     });
@@ -45,8 +45,8 @@ export function registerDockerCommands(program: Command): void {
         logger.info("Restarting containers...");
         await execa("docker-compose", ["restart"], { stdio: "inherit" });
         logger.success("Containers restarted!");
-      } catch (error) {
-        logger.error("Docker restart failed:", error);
+      } catch {
+        logger.error("Docker restart failed.");
         process.exit(1);
       }
     });
@@ -63,8 +63,8 @@ export function registerDockerCommands(program: Command): void {
           if (service) args.push(service);
 
           await execa("docker-compose", args, { stdio: "inherit" });
-        } catch (error) {
-          logger.error("Docker logs failed:", error);
+        } catch {
+          logger.error("Docker logs failed.");
           process.exit(1);
         }
       }
@@ -76,8 +76,8 @@ export function registerDockerCommands(program: Command): void {
     .action(async () => {
       try {
         await execa("docker", ["ps"], { stdio: "inherit" });
-      } catch (error) {
-        logger.error("Docker ps failed:", error);
+      } catch {
+        logger.error("Docker ps failed.");
         process.exit(1);
       }
     });
@@ -90,8 +90,8 @@ export function registerDockerCommands(program: Command): void {
         logger.info("Building images...");
         await execa("docker-compose", ["build"], { stdio: "inherit" });
         logger.success("Images built!");
-      } catch (error) {
-        logger.error("Docker build failed:", error);
+      } catch {
+        logger.error("Docker build failed.");
         process.exit(1);
       }
     });
@@ -106,8 +106,8 @@ export function registerDockerCommands(program: Command): void {
         if (service) args.push(service);
         await execa("docker-compose", args, { stdio: "inherit" });
         logger.success("Containers stopped!");
-      } catch (error) {
-        logger.error("Docker stop failed:", error);
+      } catch {
+        logger.error("Docker stop failed.");
         process.exit(1);
       }
     });
@@ -122,8 +122,8 @@ export function registerDockerCommands(program: Command): void {
         if (service) args.push(service);
         await execa("docker-compose", args, { stdio: "inherit" });
         logger.success("Containers started!");
-      } catch (error) {
-        logger.error("Docker start failed:", error);
+      } catch {
+        logger.error("Docker start failed.");
         process.exit(1);
       }
     });
@@ -133,11 +133,7 @@ export function registerDockerCommands(program: Command): void {
     .description("Execute a command in a running container")
     .option("--no-it", "Disable interactive terminal (default: enabled)")
     .action(
-      async (
-        service: string,
-        command: string[],
-        options: { it?: boolean }
-      ) => {
+      async (service: string, command: string[], options: { it?: boolean }) => {
         try {
           const args = ["exec"];
           // Add -it by default for interactive sessions
@@ -147,8 +143,8 @@ export function registerDockerCommands(program: Command): void {
           args.push(service, ...command);
 
           await execa("docker-compose", args, { stdio: "inherit" });
-        } catch (error) {
-          logger.error("Docker exec failed:", error);
+        } catch {
+          logger.error("Docker exec failed.");
           process.exit(1);
         }
       }
@@ -170,8 +166,8 @@ export function registerDockerCommands(program: Command): void {
 
         await execa("docker", systemArgs, { stdio: "inherit" });
         logger.success("Docker resources pruned!");
-      } catch (error) {
-        logger.error("Docker prune failed:", error);
+      } catch {
+        logger.error("Docker prune failed.");
         process.exit(1);
       }
     });
@@ -189,8 +185,8 @@ export function registerDockerCommands(program: Command): void {
         await execa("docker", dockerArgs, {
           stdio: "inherit",
         });
-      } catch (error) {
-        logger.error("Docker command failed:", error);
+      } catch {
+        logger.error("Docker command failed.");
         process.exit(1);
       }
     });

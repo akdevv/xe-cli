@@ -32,8 +32,8 @@ export function registerGitCommands(program: Command): void {
         await execa("git", gitArgs, {
           stdio: "inherit",
         });
-      } catch (error) {
-        logger.error("Git command failed:", error);
+      } catch {
+        logger.error("Git command failed.");
         process.exit(1);
       }
     });

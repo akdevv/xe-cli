@@ -33,8 +33,8 @@ export function installCommand(program: Command) {
           }
 
           logger.success("Installation complete!");
-        } catch (error) {
-          logger.error("Installation failed:", error);
+        } catch {
+          logger.error("Installation failed.");
           process.exit(1);
         }
       }

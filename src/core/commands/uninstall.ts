@@ -12,8 +12,8 @@ export function uninstallCommand(program: Command): void {
         const executor = new PackageManagerExecutor();
         await executor.execute("uninstall", packages);
         logger.success("Uninstallation complete!");
-      } catch (error) {
-        logger.error("Uninstallation failed:", error);
+      } catch {
+        logger.error("Uninstallation failed.");
         process.exit(1);
       }
     });

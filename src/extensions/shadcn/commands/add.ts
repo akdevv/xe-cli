@@ -40,8 +40,8 @@ export function addCommand(shadcn: Command): void {
           stdio: "inherit",
         });
         logger.success("Components added!");
-      } catch (error) {
-        logger.error("Failed to add components:", error);
+      } catch {
+        logger.error("Failed to add components.");
         process.exit(1);
       }
     });

@@ -37,7 +37,7 @@ export async function isPackageManagerInstalled(
  */
 async function installPackageManager(pm: PackageManager): Promise<boolean> {
   const installCommand = PM_INSTALL_COMMANDS[pm];
-  
+
   if (!installCommand) {
     return false;
   }
@@ -48,20 +48,20 @@ async function installPackageManager(pm: PackageManager): Promise<boolean> {
     const parts = installCommand.split(" ");
     const cmd = parts[0];
     const args = parts.slice(1);
-    
+
     if (!cmd) {
       throw new Error("Invalid install command");
     }
-    
+
     await execa(cmd, args, {
       stdio: "inherit",
       cwd: process.cwd(),
     });
     logger.success(`${pm} installed successfully!`);
     return true;
-  } catch (error) {
+  } catch {
     logger.error(`Failed to install ${pm}`);
-    logger.error("Installation error:", error);
+    logger.error("Installation failed.");
     return false;
   }
 }
@@ -73,7 +73,7 @@ export async function verifyPackageManagerInstalled(
   pm: PackageManager
 ): Promise<void> {
   const isInstalled = await isPackageManagerInstalled(pm);
-  
+
   if (isInstalled) {
     return; // All good!
   }
@@ -101,7 +101,7 @@ export async function verifyPackageManagerInstalled(
 
   // npm is available, offer to install the package manager
   logger.info(`\nWe can install ${pm} for you using npm.`);
-  
+
   const { shouldInstall } = await inquirer.prompt([
     {
       type: "confirm",
@@ -113,13 +113,15 @@ export async function verifyPackageManagerInstalled(
 
   if (shouldInstall) {
     const installed = await installPackageManager(pm);
-    
+
     if (!installed) {
       logger.info(`\nAlternatively: ${PM_ALTERNATIVE_INSTALL[pm]}`);
       throw new Error(`Failed to install ${pm}`);
     }
   } else {
-    logger.info(`\nYou can install ${pm} later with: ${PM_INSTALL_COMMANDS[pm]}`);
+    logger.info(
+      `\nYou can install ${pm} later with: ${PM_INSTALL_COMMANDS[pm]}`
+    );
     logger.info(PM_ALTERNATIVE_INSTALL[pm]);
     throw new Error(`${pm} is not installed`);
   }

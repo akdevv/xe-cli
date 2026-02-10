@@ -22,8 +22,8 @@ export function updateCommand(program: Command) {
         }
 
         logger.success("Update complete!");
-      } catch (error) {
-        logger.error("Update failed:", error);
+      } catch {
+        logger.error("Update failed.");
         process.exit(1);
       }
     });

@@ -178,7 +178,7 @@ export async function listAvailableScripts(): Promise<void> {
       console.log(`    ${chalk.gray(command)}`);
     });
     console.log("");
-  } catch (error) {
-    logger.error("Failed to read package.json:", error);
+  } catch {
+    logger.error("Failed to read package.json.");
   }
 }

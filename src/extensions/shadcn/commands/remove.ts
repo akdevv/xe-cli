@@ -34,8 +34,8 @@ export function removeCommand(shadcn: Command): void {
         } else {
           logger.info("Cancelled");
         }
-      } catch (error) {
-        logger.error("Failed to remove component:", error);
+      } catch {
+        logger.error("Failed to remove component.");
         process.exit(1);
       }
     });

@@ -59,8 +59,8 @@ export function registerConfigCommands(program: Command) {
             console.log(configPath);
           }
         }
-      } catch (error) {
-        logger.error("Failed to open editor:", error);
+      } catch {
+        logger.error("Failed to open editor.");
         logger.info("Please edit manually:");
         console.log(configPath);
       }

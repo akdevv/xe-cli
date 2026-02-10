@@ -40,8 +40,8 @@ export function initCommand(shadcn: Command): void {
           stdio: "inherit",
         });
         logger.success("Shadcn-ui initialized!");
-      } catch (error) {
-        logger.error("Shadcn init failed:", error);
+      } catch {
+        logger.error("Shadcn init failed.");
         process.exit(1);
       }
     });
