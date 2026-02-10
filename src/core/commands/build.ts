@@ -11,8 +11,8 @@ export function buildCommand(program: Command) {
         const executor = new PackageManagerExecutor();
         await executor.execute("build");
         logger.success("Build complete!");
-      } catch (error) {
-        logger.error("Build failed:", error);
+      } catch {
+        logger.error("Build failed.");
         process.exit(1);
       }
     });

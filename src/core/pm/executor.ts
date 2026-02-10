@@ -157,7 +157,6 @@ export class PackageManagerExecutor {
         console.log(result.stdout);
       }
     } catch (error: unknown) {
-      logger.error("Command failed");
       throw error;
     }
   }
